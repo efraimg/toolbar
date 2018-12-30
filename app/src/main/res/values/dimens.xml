@@ -33,7 +33,14 @@
     <dimen name="toolbar_pack_title_left_and_right_padding">20dp</dimen>
     <dimen name="toolbar_badge_height_and_width">32dp</dimen>
     <dimen name="toolbar_badge_text_size">9sp</dimen>
+    <dimen name="toolbar_pack_item_icon_top_offset">0.225</dimen>
     <item name="toolbar_icon_item_icon_top_offset" format="float" type="dimen">0.3</item>
     <item name="toolbar_icon_item_icon_height_and_width" type="dimen" format="float">0.24</item>
     <item name="toolbar_icon_item_title_offset_top" type="dimen" format="float">0.039</item>
+    <item name="toolbar_pack_item_icon_height_and_width" type="dimen" format="float">0.39</item>
+    <dimen name="toolbar_pack_item_title_text_size">11.5sp</dimen>
+    <dimen name="toolbar_number_value_text_size">24sp</dimen>
+    <dimen name="toolbar_number_title_text_size">12sp</dimen>
+    <dimen name="toolbar_number_title_top_offset">3dp</dimen>
+    <item name="toolbar_pack_item_title_height" type="dimen" format="float">0.26</item>
 </resources>
