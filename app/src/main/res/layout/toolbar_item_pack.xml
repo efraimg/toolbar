@@ -73,6 +73,7 @@
                     android:id="@+id/toolbar_pack_icon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:backgroundTint="@color/pnx_white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1"
                     app:layout_constraintEnd_toEndOf="parent"

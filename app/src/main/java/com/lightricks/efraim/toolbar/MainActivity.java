@@ -17,40 +17,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ToolbarItem toolbarItem11 = ToolbarItem.createIconToolbarItem("id1", R.string.animate, R.drawable.ic_animate, null, R.color.pnx_gray1);
-        ToolbarItem toolbarItem22 = ToolbarItem.createIconToolbarItem("id1", R.string.loop, R.drawable.ic_loop, null, R.color.pnx_gray1);
-        ToolbarItem toolbarItem33 = ToolbarItem.createIconToolbarItem("id1", R.string.sky, R.drawable.ic_sky, null, R.color.pnx_gray1);
-        ToolbarItem toolbarItem44 = ToolbarItem.createIconToolbarItem("id1", R.string.overlay, R.drawable.ic_overlays, null, R.color.pnx_gray1);
-        ToolbarItem toolbarItem55 = ToolbarItem.createIconToolbarItem("id1", R.string.camera_fx, R.drawable.ic_camera_fx, null, R.color.pnx_gray1);
+        ToolbarItem toolbarItem11 = ToolbarItem.createIconToolbarItem("id1", R.string.animate, R.drawable.ic_animate, true,null);
+        ToolbarItem toolbarItem22 = ToolbarItem.createIconToolbarItem("id1", R.string.loop, R.drawable.ic_loop,false, null);
+        ToolbarItem toolbarItem33 = ToolbarItem.createIconToolbarItem("id1", R.string.sky, R.drawable.ic_sky,false, null);
+        ToolbarItem toolbarItem44 = ToolbarItem.createIconToolbarItem("id1", R.string.overlay, R.drawable.ic_overlays,false ,null);
+        ToolbarItem toolbarItem55 = ToolbarItem.createIconToolbarItem("id1", R.string.camera_fx, R.drawable.ic_camera_fx,false, null);
 
-        ToolbarItem toolbarItem4 = ToolbarItem.createNumberToolbarItem("id1", R.string.overlay, "15", null);
+        ToolbarItem toolbarItem4 = ToolbarItem.createNumberToolbarItem("id1", R.string.overlay, "15",true);
         ToolbarItem toolbarItem5 = ToolbarItem.createPackToolbarItem(
-                "id", R.string.app_name, R.color.pnx_white, R.color.pnx_gray3,
-                R.drawable.ic_duplicate, R.color.main_orange, UriUtils.getResourceUri(this, R.raw.test_image), null, true, false, R.string.pack1);
+                "id", R.string.app_name, R.color.pnx_gray3,
+                R.drawable.ic_duplicate, UriUtils.getResourceUri(this, R.raw.test_image),true, null, true, false, R.string.pack1);
         ToolbarItem toolbarItem6 = ToolbarItem.createPackToolbarItem(
-                "id", R.string.app_name, R.color.pnx_gray1, R.color.main_orange,
-                null, R.color.main_orange, UriUtils.getResourceUri(this, R.raw.test_image), null, false, false, null);
+                "id", R.string.app_name, R.color.pnx_gray1,
+                null,  UriUtils.getResourceUri(this, R.raw.test_image), false,null, false, false, null);
         ToolbarItem toolbarItem7 = ToolbarItem.createPackToolbarItem(
-                "id", R.string.app_name, R.color.pnx_gray1, R.color.pnx_gray3,
-                R.drawable.ic_duplicate, R.color.main_orange_50, UriUtils.getResourceUri(this, R.raw.test_image), null, false, true, null);
+                "id", R.string.app_name, R.color.pnx_gray1,
+                R.drawable.ic_duplicate, UriUtils.getResourceUri(this, R.raw.test_image),true, null, false, true, null);
 
         ToolbarItem toolbarItem8 = ToolbarItem.createPackToolbarItem(
-                "id", R.string.app_name, R.color.pnx_white, R.color.pnx_gray3,
-                R.drawable.ic_duplicate, R.color.main_orange, UriUtils.getResourceUri(this, R.raw.test_image), R.drawable.ic_round_star_rate_18px, true, false, R.string.pack2);
+                "id", R.string.app_name, R.color.pnx_white,
+                R.drawable.ic_duplicate, UriUtils.getResourceUri(this, R.raw.test_image),true, R.drawable.ic_round_star_rate_18px, true, false, R.string.pack2);
         ToolbarItem toolbarItem9 = ToolbarItem.createPackToolbarItem(
-                "id", R.string.app_name, R.color.pnx_white, R.color.pnx_gray1,
-                null, R.color.main_orange, UriUtils.getResourceUri(this, R.raw.test_image), null, true, true, null);
+                "id", R.string.app_name, R.color.pnx_white,
+                null, UriUtils.getResourceUri(this, R.raw.test_image),false, null, true, true, null);
 
         ToolbarItem toolbarItem10 = ToolbarItem.createPackToolbarItem(
-                "id", R.string.app_name, R.color.pnx_white, R.color.pnx_gray3,
-                R.drawable.ic_more, R.color.pnx_white, UriUtils.getResourceUri(this, R.raw.test_image), null, true, true, R.string.pack3);
+                "id", R.string.app_name, R.color.pnx_white,
+                R.drawable.ic_more, UriUtils.getResourceUri(this, R.raw.test_image),true, null, true, true, R.string.pack3);
 //        ToolbarItem toolbarItem11 = ToolbarItem.createPackToolbarItem(
 //                "id", R.string.app_name, R.color.pnx_white, R.color.pnx_gray3,
 //                R.drawable.ic_duplicate, R.color.main_orange, UriUtils.getResourceUri(this, R.raw.test_image), R.drawable.ic_round_star_rate_18px, true, false, R.string.app_name);
 
         ToolbarItem toolbarItem12 = ToolbarItem.createPackToolbarItem(
-                "id", R.string.app_name, R.color.pnx_white, R.color.pnx_gray3,
-                R.drawable.ic_duplicate, R.color.main_orange, UriUtils.getResourceUri(this, R.raw.test_image), R.drawable.ic_round_star_rate_18px, true, true, null);
+                "id", R.string.app_name, R.color.pnx_white,
+                R.drawable.ic_duplicate, UriUtils.getResourceUri(this, R.raw.test_image),true, R.drawable.ic_round_star_rate_18px, true, true, null);
 
 
         ToolbarView toolbarView1 = findViewById(R.id.toolbar_1);

@@ -33,12 +33,7 @@ public class ToolbarItem {
     @Nullable
     private final Integer title;
 
-    /**
-     * Color used by the item.
-     */
-    @ColorRes
-    @Nullable
-    private final Integer titleColor;
+
     /**
      * Color used by the item.
      */
@@ -59,14 +54,11 @@ public class ToolbarItem {
     @Nullable
     private final Integer icon;
 
-    @ColorRes
-    @Nullable
-    private final Integer iconTintColor;
-    /**
-     * Thumbnail that is displayed by this item. For example: sky item, displays a thumbnail of hte ski sky.
-     */
     @Nullable
     private final Uri thumbnail;
+
+
+    private final boolean isSelected;
 
     /**
      * Badge displayed on top of items's content
@@ -90,36 +82,35 @@ public class ToolbarItem {
     @Nullable
     private final Integer packTitle;
 
-    private ToolbarItem(@NonNull String id, @NonNull ToolbarItemStyle style, @Nullable @StringRes Integer title,
-                        @ColorRes @Nullable Integer titleColor, @Nullable Integer titleBackgroundColor, @Nullable String value, @DrawableRes @Nullable Integer icon,
-                        @Nullable Integer iconTintColor, @Nullable Uri thumbnail, @DrawableRes @Nullable Integer badge, boolean isFirst, boolean isLast, @StringRes @Nullable Integer packTitle) {
+    private ToolbarItem(@NonNull String id, @NonNull ToolbarItemStyle style, @Nullable @StringRes Integer title, @Nullable Integer titleBackgroundColor, @Nullable String value, @DrawableRes @Nullable Integer icon,
+                        @Nullable Uri thumbnail, boolean isSelected, @DrawableRes @Nullable Integer badge, boolean isFirst, boolean isLast, @StringRes @Nullable Integer packTitle) {
         this.id = id;
         this.style = style;
         this.title = title;
-        this.titleColor = titleColor;
         this.titleBackgroundColor = titleBackgroundColor;
         this.value = value;
         this.icon = icon;
-        this.iconTintColor = iconTintColor;
         this.thumbnail = thumbnail;
+        this.isSelected = isSelected;
         this.badge = badge;
         this.isFirst = isFirst;
         this.isLast = isLast;
         this.packTitle = packTitle;
     }
 
-    public static ToolbarItem createIconToolbarItem(@NonNull String id, @NonNull @StringRes Integer title, @DrawableRes @NonNull Integer icon, @DrawableRes @Nullable Integer badge, @ColorRes @Nullable Integer color) {
-        return new ToolbarItem(id, ToolbarItemStyle.ICON, title, color, null, null, icon, color, null, badge, false, false, null);
+    public static ToolbarItem createIconToolbarItem(@NonNull String id, @NonNull @StringRes Integer title,
+                                                    @DrawableRes @NonNull Integer icon,boolean isSelected, @DrawableRes @Nullable Integer badge) {
+        return new ToolbarItem(id, ToolbarItemStyle.ICON, title, null, null, icon, null, isSelected, badge, false, false, null);
     }
 
-    public static ToolbarItem createNumberToolbarItem(@NonNull String id, @NonNull @StringRes Integer title, @NonNull String value, @ColorRes @Nullable Integer color) {
-        return new ToolbarItem(id, ToolbarItemStyle.NUMBER, title, color, null, value, null, color, null, null, false, false, null);
+    public static ToolbarItem createNumberToolbarItem(@NonNull String id, @NonNull @StringRes Integer title, @NonNull String value,boolean isSelected) {
+        return new ToolbarItem(id, ToolbarItemStyle.NUMBER, title, null, value, null, null, isSelected, null, false, false, null);
     }
 
     public static ToolbarItem createPackToolbarItem(@NonNull String id,
-                                                    @NonNull @StringRes Integer title, @NonNull Integer titleColor, @NonNull Integer backgroundColor, @DrawableRes @Nullable Integer icon,
-                                                    @Nullable Integer iconTintColor, @NonNull Uri thumbnail, @DrawableRes @Nullable Integer badge, boolean isFirst, boolean isLast, @StringRes @Nullable Integer packTitle) {
-        return new ToolbarItem(id, ToolbarItemStyle.PACK, title, titleColor, backgroundColor, null, icon, iconTintColor, thumbnail, badge, isFirst, isLast, packTitle);
+                                                    @NonNull @StringRes Integer title, @NonNull Integer backgroundColor, @DrawableRes @Nullable Integer icon
+            , @NonNull Uri thumbnail, boolean isSelected,@DrawableRes @Nullable Integer badge, boolean isFirst, boolean isLast, @StringRes @Nullable Integer packTitle) {
+        return new ToolbarItem(id, ToolbarItemStyle.PACK, title, backgroundColor, null, icon, thumbnail, isSelected, badge, isFirst, isLast, packTitle);
 
     }
 
@@ -149,6 +140,10 @@ public class ToolbarItem {
         return icon;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
     @Nullable
     public Uri getThumbnail() {
         return thumbnail;
@@ -166,16 +161,6 @@ public class ToolbarItem {
 
     public boolean isLast() {
         return isLast;
-    }
-
-    @Nullable
-    public Integer getTitleColor() {
-        return titleColor;
-    }
-
-    @Nullable
-    public Integer getIconTintColor() {
-        return iconTintColor;
     }
 
     @Nullable

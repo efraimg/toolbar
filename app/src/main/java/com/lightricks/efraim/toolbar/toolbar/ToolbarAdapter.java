@@ -72,23 +72,23 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         void bind(int position) {
             super.bind(position);
             ToolbarItem toolbarItem = getItem(position);
+            int tintColor = toolbarItem.isSelected() ? R.color.main_orange : R.color.pnx_gray1;
+            int tintColorId = context.getResources().getColor(tintColor, null);
+            ColorStateList tintColorStateList = ColorStateList.valueOf(tintColorId);
             if (toolbarItem.getIcon() != null) {
                 icon.setBackgroundResource(toolbarItem.getIcon());
+                icon.setBackgroundTintList(tintColorStateList);
+            }else{
+                icon.setBackground(null);
             }
-            if (toolbarItem.getIconTintColor() != null) {
-                int colorId = context.getResources().getColor(toolbarItem.getIconTintColor(), null);
-                icon.setBackgroundTintList(ColorStateList.valueOf(colorId));
-            }
+
             if (toolbarItem.getTitle() != null) {
                 title.setText(toolbarItem.getTitle());
             } else {
                 title.setText("");
             }
-            if (toolbarItem.getTitleColor() != null) {
-                int colorId = context.getResources().getColor(toolbarItem.getTitleColor(), null);
-                icon.setBackgroundTintList(ColorStateList.valueOf(colorId));
-                title.setTextColor(colorId);
-            }
+            title.setTextColor(tintColorId);
+
             if (toolbarItem.getBadge() != null) {
                 badge.setBackgroundResource(toolbarItem.getBadge());
             }
@@ -109,17 +109,22 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         void bind(int position) {
             super.bind(position);
             ToolbarItem toolbarItem = getItem(position);
-            number.setText(toolbarItem.getValue());
+            int tintColor = toolbarItem.isSelected() ? R.color.main_orange : R.color.pnx_gray1;
+            int tintColorId = context.getResources().getColor(tintColor, null);
+
+            if(toolbarItem.getValue() != null){
+                number.setText(toolbarItem.getValue());
+            }else{
+                number.setText("");
+            }
             if (toolbarItem.getTitle() != null) {
                 title.setText(toolbarItem.getTitle());
             } else {
                 title.setText("");
             }
-            if (toolbarItem.getTitleColor() != null) {
-                int colorId = context.getResources().getColor(toolbarItem.getTitleColor(), null);
-                number.setTextColor(colorId);
-                title.setTextColor(colorId);
-            }
+            number.setTextColor(tintColorId);
+            title.setTextColor(tintColorId);
+
         }
     }
 
@@ -155,10 +160,6 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
                 title.setVisibility(View.GONE);
                 iconMask.setVisibility(View.VISIBLE);
                 icon.setBackgroundResource(toolbarItem.getIcon());
-                if (toolbarItem.getIconTintColor() != null) {
-                    int colorId = context.getResources().getColor(toolbarItem.getIconTintColor(), null);
-                    icon.setBackgroundTintList(ColorStateList.valueOf(colorId));
-                }
             }else{
                 activeTitle = title;
                 titleSelected.setVisibility(View.GONE);
