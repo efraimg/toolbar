@@ -3,6 +3,8 @@ package com.lightricks.efraim.toolbar.toolbar;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -43,8 +45,10 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
 
         ToolbarItemViewHolder(@NonNull View itemView) {
             super(itemView);
+
             ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
             layoutParams.height = height;
+
             itemView.setTag(this);
             if (onClickListener != null) {
                 itemView.setOnClickListener(onClickListener);
@@ -75,6 +79,7 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
             int tintColor = toolbarItem.isSelected() ? R.color.main_orange : R.color.pnx_gray1;
             int tintColorId = context.getResources().getColor(tintColor, null);
             ColorStateList tintColorStateList = ColorStateList.valueOf(tintColorId);
+
             if (toolbarItem.getIcon() != null) {
                 icon.setBackgroundResource(toolbarItem.getIcon());
                 icon.setBackgroundTintList(tintColorStateList);
@@ -82,11 +87,7 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
                 icon.setBackground(null);
             }
 
-            if (toolbarItem.getTitle() != null) {
-                title.setText(toolbarItem.getTitle());
-            } else {
-                title.setText("");
-            }
+            setText(title,toolbarItem.getTitle());
             title.setTextColor(tintColorId);
 
             if (toolbarItem.getBadge() != null) {
@@ -112,19 +113,10 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
             int tintColor = toolbarItem.isSelected() ? R.color.main_orange : R.color.pnx_gray1;
             int tintColorId = context.getResources().getColor(tintColor, null);
 
-            if(toolbarItem.getValue() != null){
-                number.setText(toolbarItem.getValue());
-            }else{
-                number.setText("");
-            }
-            if (toolbarItem.getTitle() != null) {
-                title.setText(toolbarItem.getTitle());
-            } else {
-                title.setText("");
-            }
+            setText(number,toolbarItem.getValue());
+            setText(title,toolbarItem.getTitle());
             number.setTextColor(tintColorId);
             title.setTextColor(tintColorId);
-
         }
     }
 
@@ -133,7 +125,7 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         View icon;
         TextView title;
         TextView titleSelected;
-        View fisrtItemMask;
+        View firstItemMask;
         View lastItemMask;
         View iconMask;
 
@@ -143,7 +135,7 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
             icon = itemView.findViewById(R.id.toolbar_pack_icon);
             title = itemView.findViewById(R.id.toolbar_pack_title_text);
             titleSelected = itemView.findViewById(R.id.toolbar_pack_title_text_selected);
-            fisrtItemMask = itemView.findViewById(R.id.toolbar_pack_first_item_mask);
+            firstItemMask = itemView.findViewById(R.id.toolbar_pack_first_item_mask);
             lastItemMask = itemView.findViewById(R.id.toolbar_pack_last_item_mask);
             iconMask = itemView.findViewById(R.id.toolbar_pack_icon_mask);
         }
@@ -154,12 +146,16 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
             ToolbarItem toolbarItem = getItem(position);
             Glide.with(image).load(toolbarItem.getThumbnail()).into(image);
             TextView activeTitle;
-            if (toolbarItem.getIcon() != null) {
+            if (toolbarItem.isSelected()) {
                 activeTitle = titleSelected;
                 titleSelected.setVisibility(View.VISIBLE);
                 title.setVisibility(View.GONE);
                 iconMask.setVisibility(View.VISIBLE);
-                icon.setBackgroundResource(toolbarItem.getIcon());
+                if(toolbarItem.getIcon() != null){
+                    icon.setBackgroundResource(toolbarItem.getIcon());
+                }else{
+                    icon.setBackground(null);
+                }
             }else{
                 activeTitle = title;
                 titleSelected.setVisibility(View.GONE);
@@ -167,20 +163,18 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
                 icon.setBackground(null);
                 iconMask.setVisibility(View.GONE);
             }
-            if (toolbarItem.getTitle() != null) {
-                activeTitle.setText(toolbarItem.getTitle());
-            } else {
-                activeTitle.setText("");
-            }
+            setText(activeTitle,toolbarItem.getTitle());
 
             if (toolbarItem.getTitleBackgroundColor() != null) {
                 title.setBackgroundColor(context.getResources().getColor(toolbarItem.getTitleBackgroundColor(), null));
+            }else{
+                title.setBackground(null);
             }
 
             if (toolbarItem.isFirst()) {
-                fisrtItemMask.setVisibility(View.VISIBLE);
+                firstItemMask.setVisibility(View.VISIBLE);
             } else {
-                fisrtItemMask.setVisibility(View.INVISIBLE);
+                firstItemMask.setVisibility(View.INVISIBLE);
             }
             if (toolbarItem.isLast()) {
                 lastItemMask.setVisibility(View.VISIBLE);
@@ -247,4 +241,18 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         toolbarItemViewHolder.bind(position);
     }
 
+    private static void setText(TextView textView, @StringRes @Nullable Integer text){
+        if(text != null){
+            textView.setText(text);
+        }else{
+            textView.setText("");
+        }
+    }
+    private static void setText(TextView textView, @Nullable String text){
+        if(text != null){
+            textView.setText(text);
+        }else{
+            textView.setText("");
+        }
+    }
 }

@@ -58,6 +58,9 @@ public class ToolbarItem {
     private final Uri thumbnail;
 
 
+    /**
+     * Setting item as selected effects the way the item is displayed, the item is highlighted and in some cases there is more visual effects.
+     */
     private final boolean isSelected;
 
     /**
@@ -66,8 +69,6 @@ public class ToolbarItem {
     @DrawableRes
     @Nullable
     private final Integer badge;
-
-
 
     /**
      * When true, the item is the first of a pack or group of items.
