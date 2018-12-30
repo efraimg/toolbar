@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Toolbar</string>
+    <string name="pack1">Pack 1</string>
+    <string name="pack2">Pack 2</string>
+    <string name="pack3">Pack 3</string>
+    <string name="animate">Animate</string>
+    <string name="loop">Loop</string>
+    <string name="sky">Sky</string>
+    <string name="overlay">Overaly</string>
+    <string name="camera_fx">Camera FX</string>
+</resources>

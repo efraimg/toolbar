@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/pnx_black</color>
+    <color name="colorPrimaryDark">@color/pnx_black</color>
+    <color name="colorAccent">@color/main_orange</color>
+
+
+    <color name="main_orange">#FFA464</color>
+    <color name="main_orange_50">#76FFA464</color>
+    <color name="pnx_gray2">#625F5C</color>
+    <color name="pnx_gray2_50">#7F625F5C</color>
+    <color name="pnx_gray3">#1A1918</color>
+    <color name="pnx_gray3_80">#CC1A1918</color>
+    <color name="pnx_gray3_95">#F21A1918</color>
+
+    <color name="pnx_white">#FFFFFF</color>
+    <color name="pnx_white_35">#59FFFFFF</color>
+    <color name="pnx_white_50">#7FFFFFFF</color>
+    <color name="pnx_black">#000000</color>
+    <color name="pnx_gray1">#C2BEBA</color>
+</resources>

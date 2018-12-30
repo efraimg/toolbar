@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_item_icon_width">32dp</dimen>
+    <dimen name="toolbar_item_icon_height">32dp</dimen>
+    <dimen name="toolbar_item_title_width">60dp</dimen>
+    <dimen name="toolbar_item_width">72dp</dimen>
+    <dimen name="toolbar_item_min_space">1dp</dimen>
+    <dimen name="toolbar_item_max_space">20dp</dimen>
+    <dimen name="toolbar_item_first_item_left_offset">1dp</dimen>
+    <dimen name="toolbar_item_pack_edge_corner_radius">14dp</dimen>
+    <dimen name="toolbar_item_pack_edge_corner_radius_negative">-14dp</dimen>
+    <dimen name="toolbar_item_bottom_offset">38dp</dimen>
+    <dimen name="toolbar_badge_size">32dp</dimen>
+    <dimen name="toolbar_item_top_offset">16dp</dimen>
+    <item name="toolbar_pack_space_relative_to_toolbar_height" format="float" type="dimen">0.1
+    </item>
+    <dimen name="toolbar_pack_first_pack_left_offset">8dp</dimen>
+    <dimen name="toolbar_pack_title_bottom_offset">0dp</dimen>
+    <dimen name="toolbar_icon_icon_margin_top">8dp</dimen>
+    <dimen name="toolbar_icon_badge_size">32dp</dimen>
+    <dimen name="toolbar_item_title_text_size">12sp</dimen>
+    <dimen name="toolbar_item_title_margin_top">7dp</dimen>
+    <dimen name="toolbar_item_margin_bottom">38dp</dimen>
+    <dimen name="toolbar_item_pack_corner_radius_negative">-1dp</dimen>
+    <dimen name="toolbar_item_pack_corner_radius">1dp</dimen>
+
+    <item name="toolbar_pack_item_height" format="float" type="dimen">0.66</item>
+    <item name="toolbar_pack_dimension_ratio" format="float" type="dimen">0.76</item>
+    <item name="toolbar_pack_item_image_height" format="float" type="dimen">0.74</item>
+    <dimen name="toolbar_pack_title_top_offset">3dp</dimen>
+    <dimen name="toolbar_pack_title_left_and_right_padding">20dp</dimen>
+</resources>
