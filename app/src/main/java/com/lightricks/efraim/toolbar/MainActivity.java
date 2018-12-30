@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 //        toolbarView.setToolbarItemList(Arrays.asList(toolbarItem9, toolbarItem10, toolbarItem11, toolbarItem12, toolbarItem5, toolbarItem6, toolbarItem6, toolbarItem6,
 //                toolbarItem6, toolbarItem6, toolbarItem7, toolbarItem8, toolbarItem6, toolbarItem6, toolbarItem6,
 //                toolbarItem6, toolbarItem6, toolbarItem7));
-        toolbarView1.setToolbarItemList(Arrays.asList(toolbarItem11, toolbarItem22, toolbarItem33, toolbarItem44, toolbarItem55,toolbarItem55,toolbarItem55));//, toolbarItem2, toolbarItem3, toolbarItem4));
+        toolbarView1.setToolbarItemList(Arrays.asList(toolbarItem4,toolbarItem11, toolbarItem22, toolbarItem33, toolbarItem44, toolbarItem55,toolbarItem55,toolbarItem55));//, toolbarItem2, toolbarItem3, toolbarItem4));
         toolbarView1.setToolbarItemClickedListener(new ToolbarView.ToolbarItemClickedListener() {
             @Override
             public void onClick(ToolbarItem item) {

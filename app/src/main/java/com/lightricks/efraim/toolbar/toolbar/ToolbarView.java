@@ -25,6 +25,7 @@ public class ToolbarView extends FrameLayout {
     private int firstItemOffset;
     private int spaceBetweenItems;
     private int spaceBetweenPacks;
+    private int spaceBetweenPackItems;
     private int firstPackOffset;
 
     /**
@@ -138,6 +139,7 @@ public class ToolbarView extends FrameLayout {
 
     private void initSpacingParams() {
         spaceBetweenPacks = (int) (getFloatVal(R.dimen.toolbar_pack_space_relative_to_toolbar_height) * getHeight());
+        spaceBetweenPackItems = getResources().getDimensionPixelOffset(R.dimen.toolbar_pack_space_between_pack_items);
         firstPackOffset = getResources().getDimensionPixelSize(R.dimen.toolbar_pack_first_pack_left_offset);
         firstItemOffset = getContext().getResources().getDimensionPixelOffset(R.dimen.toolbar_item_first_item_left_offset);
         calcToolbarItemsSpace();
@@ -263,7 +265,7 @@ public class ToolbarView extends FrameLayout {
                 if (toolbarItemList.get(pos).isFirst()) {
                     return spaceBetweenPacks;
                 } else {
-                    return 0;
+                    return spaceBetweenPackItems;
                 }
             }
         }

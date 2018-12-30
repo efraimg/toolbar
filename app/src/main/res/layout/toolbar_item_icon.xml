@@ -27,29 +27,29 @@
         android:backgroundTint="@color/pnx_gray1"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.24"
+        app:layout_constraintHeight_percent="@dimen/toolbar_icon_item_icon_height_and_width"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_icon" />
+
     <View
         android:id="@+id/toolbar_text_guide"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.039"
+        app:layout_constraintHeight_percent="@dimen/toolbar_icon_item_title_offset_top"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_icon_icon_view">
 
     </View>
+
     <TextView
         android:id="@+id/toolbar_icon_title_text"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/toolbar_item_text_width"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:lines="1"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
         android:text="title"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/pnx_gray1"
         android:textSize="@dimen/toolbar_item_title_text_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintGuide_percent="@dimen/toolbar_icon_item_icon_top_offset" />
 
 
 </android.support.constraint.ConstraintLayout>

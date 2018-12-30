@@ -30,6 +30,11 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="10dp"/>
 
+    <include layout="@layout/toolbar_pro_badge"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+       />
 
 
 </android.support.constraint.ConstraintLayout>

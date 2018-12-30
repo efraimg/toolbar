@@ -4,6 +4,7 @@
     <dimen name="toolbar_item_icon_height">32dp</dimen>
     <dimen name="toolbar_item_title_width">60dp</dimen>
     <dimen name="toolbar_item_width">72dp</dimen>
+    <dimen name="toolbar_item_text_width">64dp</dimen>
     <dimen name="toolbar_item_min_space">1dp</dimen>
     <dimen name="toolbar_item_max_space">20dp</dimen>
     <dimen name="toolbar_item_first_item_left_offset">1dp</dimen>
@@ -14,6 +15,7 @@
     <dimen name="toolbar_item_top_offset">16dp</dimen>
     <item name="toolbar_pack_space_relative_to_toolbar_height" format="float" type="dimen">0.1
     </item>
+    <dimen name="toolbar_pack_space_between_pack_items">2dp</dimen>
     <dimen name="toolbar_pack_first_pack_left_offset">8dp</dimen>
     <dimen name="toolbar_pack_title_bottom_offset">0dp</dimen>
     <dimen name="toolbar_icon_icon_margin_top">8dp</dimen>
@@ -29,4 +31,9 @@
     <item name="toolbar_pack_item_image_height" format="float" type="dimen">0.74</item>
     <dimen name="toolbar_pack_title_top_offset">3dp</dimen>
     <dimen name="toolbar_pack_title_left_and_right_padding">20dp</dimen>
+    <dimen name="toolbar_badge_height_and_width">32dp</dimen>
+    <dimen name="toolbar_badge_text_size">9sp</dimen>
+    <item name="toolbar_icon_item_icon_top_offset" format="float" type="dimen">0.3</item>
+    <item name="toolbar_icon_item_icon_height_and_width" type="dimen" format="float">0.24</item>
+    <item name="toolbar_icon_item_title_offset_top" type="dimen" format="float">0.039</item>
 </resources>

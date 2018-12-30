@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/toolbar_item_width"
-    android:layout_height="match_parent"
+    android:layout_height="130dp"
     android:clickable="true"
     android:focusable="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginBottom="@dimen/toolbar_item_bottom_offset">
+        android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/toolbar_number_value_text"
-            android:layout_width="@dimen/toolbar_item_icon_width"
-            android:layout_height="@dimen/toolbar_item_icon_height"
-            android:text="27"
-            android:textAlignment="center"
-            android:textColor="@color/pnx_white"
-            android:textSize="30dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/pnx_gray1"
+            android:textSize="24sp"
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/toolbar_number_title_text"
-            android:layout_width="@dimen/toolbar_item_title_width"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="TextView"
-            android:textAlignment="center"
-            android:textColor="@color/pnx_white" />
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="Vibrance"
+            android:textColor="@color/pnx_gray1"
+            android:textSize="12sp"
+            android:textStyle="normal" />
     </LinearLayout>
 </FrameLayout>
