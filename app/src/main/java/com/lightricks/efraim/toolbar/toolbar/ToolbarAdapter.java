@@ -20,8 +20,13 @@ import com.lightricks.efraim.toolbar.R;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Adapter for toolbar recycler view. Can handle more than one UI type.
+ */
 public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.ToolbarItemViewHolder> {
+    // Map between style to the matching xml layout.
     private static final Map<Integer, ToolbarItemStyle> RES_ID_STYLE_MAP = new HashMap<>();
+    // Map between xml layout to the matching style.
     private static final Map<ToolbarItemStyle, Integer> STYLE_RES_ID_MAP = new HashMap<>();
     private final Context context;
     private final int height;
@@ -40,6 +45,9 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
     private ToolbarView.ToolbarItemClickedListener toolbarItemClickedListener;
     private View.OnClickListener onClickListener;
 
+    /**
+     * Base class for all the UI types.
+     */
     abstract class ToolbarItemViewHolder extends RecyclerView.ViewHolder {
         ToolbarItem toolbarItem;
 
@@ -50,9 +58,8 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
             layoutParams.height = height;
 
             itemView.setTag(this);
-            if (onClickListener != null) {
-                itemView.setOnClickListener(onClickListener);
-            }
+            itemView.setOnClickListener(onClickListener);
+
         }
 
         void bind(int position) {
@@ -60,7 +67,7 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         }
     }
 
-    class IconViewHolder extends ToolbarItemViewHolder {
+    private class IconViewHolder extends ToolbarItemViewHolder {
         View icon;
         TextView title;
         View badge;
@@ -76,18 +83,18 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         void bind(int position) {
             super.bind(position);
             ToolbarItem toolbarItem = getItem(position);
-            int tintColor = toolbarItem.isSelected() ? R.color.main_orange : R.color.pnx_gray1;
+            int tintColor = toolbarItem.isSelected() ? R.color.toolbar_item_color : R.color.toolbar_item_selected_color;
             int tintColorId = context.getResources().getColor(tintColor, null);
             ColorStateList tintColorStateList = ColorStateList.valueOf(tintColorId);
 
             if (toolbarItem.getIcon() != null) {
                 icon.setBackgroundResource(toolbarItem.getIcon());
                 icon.setBackgroundTintList(tintColorStateList);
-            }else{
+            } else {
                 icon.setBackground(null);
             }
 
-            setText(title,toolbarItem.getTitle());
+            setText(title, toolbarItem.getTitle());
             title.setTextColor(tintColorId);
 
             if (toolbarItem.getBadge() != null) {
@@ -96,7 +103,7 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         }
     }
 
-    class NumberViewHolder extends ToolbarItemViewHolder {
+    private class NumberViewHolder extends ToolbarItemViewHolder {
         TextView number;
         TextView title;
 
@@ -110,17 +117,17 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         void bind(int position) {
             super.bind(position);
             ToolbarItem toolbarItem = getItem(position);
-            int tintColor = toolbarItem.isSelected() ? R.color.main_orange : R.color.pnx_gray1;
+            int tintColor = toolbarItem.isSelected() ? R.color.toolbar_item_selected_color : R.color.toolbar_item_color;
             int tintColorId = context.getResources().getColor(tintColor, null);
 
-            setText(number,toolbarItem.getValue());
-            setText(title,toolbarItem.getTitle());
+            setText(number, toolbarItem.getValue());
+            setText(title, toolbarItem.getTitle());
             number.setTextColor(tintColorId);
             title.setTextColor(tintColorId);
         }
     }
 
-    class PackViewHolder extends ToolbarItemViewHolder {
+    private class PackViewHolder extends ToolbarItemViewHolder {
         ImageView image;
         View icon;
         TextView title;
@@ -144,30 +151,34 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         void bind(int position) {
             super.bind(position);
             ToolbarItem toolbarItem = getItem(position);
-            Glide.with(image).load(toolbarItem.getThumbnail()).into(image);
+            if (toolbarItem.getThumbnail() != null) {
+                Glide.with(image).load(toolbarItem.getThumbnail()).into(image);
+            }else{
+                image.setImageBitmap(null);
+            }
             TextView activeTitle;
             if (toolbarItem.isSelected()) {
                 activeTitle = titleSelected;
                 titleSelected.setVisibility(View.VISIBLE);
                 title.setVisibility(View.GONE);
                 iconMask.setVisibility(View.VISIBLE);
-                if(toolbarItem.getIcon() != null){
+                if (toolbarItem.getIcon() != null) {
                     icon.setBackgroundResource(toolbarItem.getIcon());
-                }else{
+                } else {
                     icon.setBackground(null);
                 }
-            }else{
+            } else {
                 activeTitle = title;
                 titleSelected.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
                 icon.setBackground(null);
                 iconMask.setVisibility(View.GONE);
             }
-            setText(activeTitle,toolbarItem.getTitle());
+            setText(activeTitle, toolbarItem.getTitle());
 
             if (toolbarItem.getTitleBackgroundColor() != null) {
                 title.setBackgroundColor(context.getResources().getColor(toolbarItem.getTitleBackgroundColor(), null));
-            }else{
+            } else {
                 title.setBackground(null);
             }
 
@@ -241,17 +252,18 @@ public class ToolbarAdapter extends ListAdapter<ToolbarItem, ToolbarAdapter.Tool
         toolbarItemViewHolder.bind(position);
     }
 
-    private static void setText(TextView textView, @StringRes @Nullable Integer text){
-        if(text != null){
+    private static void setText(TextView textView, @StringRes @Nullable Integer text) {
+        if (text != null) {
             textView.setText(text);
-        }else{
+        } else {
             textView.setText("");
         }
     }
-    private static void setText(TextView textView, @Nullable String text){
-        if(text != null){
+
+    private static void setText(TextView textView, @Nullable String text) {
+        if (text != null) {
             textView.setText(text);
-        }else{
+        } else {
             textView.setText("");
         }
     }

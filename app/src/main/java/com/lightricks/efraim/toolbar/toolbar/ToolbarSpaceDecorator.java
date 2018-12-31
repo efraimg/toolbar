@@ -5,11 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class ToolbarSpaceDecoration extends RecyclerView.ItemDecoration {
+/**
+ * Sets space between items.
+ */
+public class ToolbarSpaceDecorator extends RecyclerView.ItemDecoration {
     private final SpaceDecorationAdapter spaceDecorationAdapter;
 
 
-    public ToolbarSpaceDecoration(SpaceDecorationAdapter spaceDecorationAdapter) {
+    public ToolbarSpaceDecorator(SpaceDecorationAdapter spaceDecorationAdapter) {
         this.spaceDecorationAdapter = spaceDecorationAdapter;
     }
 
@@ -17,11 +20,16 @@ public class ToolbarSpaceDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         int pos = parent.getChildAdapterPosition(view);
-
         outRect.left = spaceDecorationAdapter.getSpaceBeforeItem(pos);
     }
 
+    /**
+     * Adapter for {@link ToolbarSpaceDecorator}.
+     */
     public interface SpaceDecorationAdapter {
+        /**
+         * Space to be set before item.
+         */
         int getSpaceBeforeItem(int pos);
     }
 }

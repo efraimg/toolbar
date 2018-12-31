@@ -1,5 +1,8 @@
 package com.lightricks.efraim.toolbar.toolbar;
 
+/**
+ * Styles for toolbar items.
+ */
 public enum ToolbarItemStyle {
     /**
      * Displayed in a pack. For example a sky item that is displayed with a group of skies.

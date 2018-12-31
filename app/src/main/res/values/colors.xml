@@ -18,4 +18,7 @@
     <color name="pnx_white_50">#7FFFFFFF</color>
     <color name="pnx_black">#000000</color>
     <color name="pnx_gray1">#C2BEBA</color>
+
+    <color name="toolbar_item_color">@color/pnx_gray1</color>
+    <color name="toolbar_item_selected_color">@color/pnx_gray1</color>
 </resources>

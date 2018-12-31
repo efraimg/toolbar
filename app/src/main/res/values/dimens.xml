@@ -5,7 +5,9 @@
     <dimen name="toolbar_item_title_width">60dp</dimen>
     <dimen name="toolbar_item_width">72dp</dimen>
     <dimen name="toolbar_item_text_width">64dp</dimen>
-    <dimen name="toolbar_item_min_space">1dp</dimen>
+    <dimen name="toolbar_item_min_space">0dp</dimen>
+    <item name="toolbar_item_last_item_visibility_percent" format="float" type="dimen">0.4
+</item>
     <dimen name="toolbar_item_max_space">20dp</dimen>
     <dimen name="toolbar_item_first_item_left_offset">1dp</dimen>
     <dimen name="toolbar_item_pack_edge_corner_radius">14dp</dimen>
@@ -43,4 +45,5 @@
     <dimen name="toolbar_number_title_text_size">12sp</dimen>
     <dimen name="toolbar_number_title_top_offset">3dp</dimen>
     <item name="toolbar_pack_item_title_height" type="dimen" format="float">0.26</item>
+    <item name="toolbar_icon_item_badge_height_and_width" type="dimen" format="float">0.2</item>
 </resources>

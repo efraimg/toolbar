@@ -21,15 +21,6 @@ import com.lightricks.efraim.toolbar.R;
 import java.util.List;
 
 public class ToolbarView extends FrameLayout {
-    private RecyclerView toolbarRecyclerView;
-    private ToolbarSpaceDecoration spaceDecorator;
-    private ToolbarPackDecoration packDecorator;
-    private int firstItemOffset;
-    private int spaceBetweenItems;
-    private int spaceBetweenPacks;
-    private int spaceBetweenPackItems;
-    private int firstPackOffset;
-
     /**
      * Notifies when a toolbar item is clicked.
      */
@@ -37,10 +28,39 @@ public class ToolbarView extends FrameLayout {
         void onClick(ToolbarItem item);
     }
 
-    private ToolbarAdapter toolbarAdapter;
-    private List<ToolbarItem> toolbarItemList;
+    private RecyclerView toolbarRecyclerView;
+    private ToolbarSpaceDecorator spaceDecorator;
+    private ToolbarPackDecorator packDecorator;
+    /**
+     * Left offset of first item. {@link #firstPackOffset} is used in case of pack items.
+     */
+    private int firstItemOffset;
+    /**
+     * Padding between items. {@link #spaceBetweenPackItems} and {@link #spaceBetweenPacks} are used
+     * in case of pack items.
+     */
+    private int spaceBetweenItems;
+    /**
+     * Left offset of first pack.
+     */
+    private int firstPackOffset;
+    /**
+     * Padding between packs.
+     */
+    private int spaceBetweenPacks;
+    /**
+     * Padding between pack items in the same pack.
+     */
+    private int spaceBetweenPackItems;
+    private ToolbarAdapter toolbarRecyclerViewAdapter;
+    /**
+     * Items to be displayed in the recycler view.
+     */
+    private List<ToolbarItem> toolbarItems;
+    /**
+     * Callback to be invoked when a item is clicked.
+     */
     private ToolbarItemClickedListener toolbarItemClickedListener;
-
 
     public ToolbarView(@NonNull Context context) {
         super(context);
@@ -70,22 +90,28 @@ public class ToolbarView extends FrameLayout {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setToolbarItemList(@NonNull List<ToolbarItem> toolbarItemList) {
-        this.toolbarItemList = toolbarItemList;
-        if (toolbarAdapter != null) {
-            toolbarAdapter.submitList(toolbarItemList);
+    public void setToolbarItems(@NonNull List<ToolbarItem> toolbarItems) {
+        this.toolbarItems = toolbarItems;
+        if (toolbarRecyclerViewAdapter != null) {
+            toolbarRecyclerViewAdapter.submitList(toolbarItems);
         }
-        calculateToolbarItemsSpace();
+        calculateItemsSpace();
         setSpaceDecorator();
     }
 
+    /**
+     * Set callback for item click.
+     */
     public void setToolbarItemClickedListener(ToolbarItemClickedListener toolbarItemClickedListener) {
         this.toolbarItemClickedListener = toolbarItemClickedListener;
-        if (toolbarAdapter != null) {
-            toolbarAdapter.setItemClickedListener(toolbarItemClickedListener);
+        if (toolbarRecyclerViewAdapter != null) {
+            toolbarRecyclerViewAdapter.setItemClickedListener(toolbarItemClickedListener);
         }
     }
 
+    /**
+     * At this stage the size of the view is known so items display can be configured.
+     */
     private void setPreDrawListener() {
         getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -100,15 +126,21 @@ public class ToolbarView extends FrameLayout {
         });
     }
 
+    /**
+     * When size of of view is changed, need to redraw the view according to new dimensions.
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if(oldh == 0){
+        if (oldh == 0) {
+            // First time the view is measured.
             return;
         }
         // Force recycler view to redraw.
         setRecyclerViewAdaptor();
+        // Recalculate spaces.
         initSpacingParams();
+        // Set new decorators.
         setPacksDecorator();
         setSpaceDecorator();
 
@@ -124,40 +156,51 @@ public class ToolbarView extends FrameLayout {
     }
 
     private void setRecyclerViewAdaptor() {
-        toolbarAdapter = new ToolbarAdapter(getContext(), getHeight());
-        toolbarRecyclerView.setAdapter(toolbarAdapter);
-        if (toolbarItemList != null) {
-            toolbarAdapter.submitList(toolbarItemList);
+        if (toolbarRecyclerView == null) {
+            return;
         }
-        if(toolbarItemClickedListener != null){
-            toolbarAdapter.setItemClickedListener(toolbarItemClickedListener);
+        toolbarRecyclerViewAdapter = new ToolbarAdapter(getContext(), getHeight());
+        toolbarRecyclerView.setAdapter(toolbarRecyclerViewAdapter);
+        if (toolbarItems != null) {
+            toolbarRecyclerViewAdapter.submitList(toolbarItems);
+        }
+        if (toolbarItemClickedListener != null) {
+            toolbarRecyclerViewAdapter.setItemClickedListener(toolbarItemClickedListener);
         }
     }
 
     @NonNull
-    private ToolbarPackDecoration createToolbarPackDecoration() {
+    private ToolbarPackDecorator createToolbarPackDecoration() {
         int titleOffset = calculatePackTitleOffsetFromTopOfRecyclerView();
         int packHeaderLeftAndRightPadding = getResources().getDimensionPixelOffset(R.dimen.toolbar_pack_title_left_and_right_padding);
-
         Pair<Integer, Integer> badgeLeftAndTopOffset = calculateBadgeLeftAndTopOffsetFromTopOfRecyclerView();
         View badgeView = getLayoutInflater(getContext()).inflate(R.layout.badge, null);
         badgeView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        return new ToolbarPackDecoration(new PackDecorationAdaptor(), titleOffset, packHeaderLeftAndRightPadding, badgeLeftAndTopOffset.first, badgeLeftAndTopOffset.second, badgeView);
+        return new ToolbarPackDecorator(new PackDecorationAdaptor(), titleOffset, packHeaderLeftAndRightPadding,
+                badgeLeftAndTopOffset.first, badgeLeftAndTopOffset.second, badgeView);
     }
 
+    /**
+     * Calculate the offset of the pack title from the top of the recycler view so the the title
+     * will be drawn right below the pack items plus predefined padding.
+     */
     private int calculatePackTitleOffsetFromTopOfRecyclerView() {
-        float heightPercent = getFloatVal(R.dimen.toolbar_pack_item_height);
-        float topPaddingPercent = (1.0f - heightPercent) / 2.0f;
+        float packItemsHeightPercent = getFloatVal(R.dimen.toolbar_pack_item_height);
+        float topPaddingPercent = (1.0f - packItemsHeightPercent) / 2.0f;
         float titleTopOffsetFromThumbnail = getResources().getDimension(R.dimen.toolbar_pack_title_top_offset);
-        int titleOffset = (int) ((heightPercent + topPaddingPercent) * getHeight() + titleTopOffsetFromThumbnail);
+        int titleOffset = (int) ((packItemsHeightPercent + topPaddingPercent) * getHeight() + titleTopOffsetFromThumbnail);
         return titleOffset;
     }
 
-    // Badge center should be in the top left corner of the toolbar item.
+
+    /**
+     * Badge center should be in the top left corner of the pack.
+     */
     private Pair<Integer, Integer> calculateBadgeLeftAndTopOffsetFromTopOfRecyclerView() {
+        // Left offset.
         int badgeSize = getResources().getDimensionPixelSize(R.dimen.toolbar_badge_size);
         int badgeLeftOffset = badgeSize / 2;
-
+        // Top offset.
         float heightPercent = getFloatVal(R.dimen.toolbar_pack_item_height);
         float topPaddingPercent = (1.0f - heightPercent) / 2.0f;
         int badgeTopOffset = (int) (getHeight() * topPaddingPercent - badgeSize / 2);
@@ -172,59 +215,75 @@ public class ToolbarView extends FrameLayout {
     }
 
     private void initSpacingParams() {
-        spaceBetweenPacks = (int) (getFloatVal(R.dimen.toolbar_pack_space_relative_to_toolbar_height) * getHeight());
-        spaceBetweenPackItems = getResources().getDimensionPixelOffset(R.dimen.toolbar_pack_space_between_pack_items);
-        firstPackOffset = getResources().getDimensionPixelSize(R.dimen.toolbar_pack_first_pack_left_offset);
-        firstItemOffset = getContext().getResources().getDimensionPixelOffset(R.dimen.toolbar_item_first_item_left_offset);
-        calculateToolbarItemsSpace();
+        calculatePackItemsSpace();
+        calculateItemsSpace();
     }
 
-    private void calculateToolbarItemsSpace() {
-        if (toolbarItemList == null || toolbarItemList.size() == 0 || getWidth() == 0) {
+    private void calculatePackItemsSpace() {
+        firstPackOffset = getResources().getDimensionPixelSize(R.dimen.toolbar_pack_first_pack_left_offset);
+        spaceBetweenPacks = (int) (getFloatVal(R.dimen.toolbar_pack_space_relative_to_toolbar_height) * getHeight());
+        spaceBetweenPackItems = getResources().getDimensionPixelOffset(R.dimen.toolbar_pack_space_between_pack_items);
+    }
+
+    /**
+     * Calculate space between items so they will be layout nicely on the screen. If there is more
+     * items that can fit in the view width, set the space so the last item will be partially visible.
+     * If the items do not exceed view width, try to set the spaces so the items will take over all
+     * the view width in a symmetrical way. If in order to fill the width the space between items
+     * exceeds a given threshold defined by {@link R.dimen#toolbar_item_max_space} center the items
+     * and set the space to max.
+     */
+    private void calculateItemsSpace() {
+        if (toolbarItems == null || toolbarItems.size() == 0 || getWidth() == 0) {
             return;
         }
+        firstItemOffset = getContext().getResources().getDimensionPixelOffset(R.dimen.toolbar_item_first_item_left_offset);
+
         int layoutWidth = getWidth();
         int itemWidth = getContext().getResources().getDimensionPixelOffset(R.dimen.toolbar_item_width);
         int minSpaceBetweenItems = getContext().getResources().getDimensionPixelOffset(R.dimen.toolbar_item_min_space);
-        int totalItemsWidth = toolbarItemList.size() * itemWidth + firstItemOffset + (toolbarItemList.size() - 1) * minSpaceBetweenItems;
-
+        int totalItemsWidth = toolbarItems.size() * itemWidth + firstItemOffset +
+                (toolbarItems.size() - 1) * minSpaceBetweenItems;
         spaceBetweenItems = minSpaceBetweenItems;
         if (totalItemsWidth > layoutWidth) {
-            // Set space in a way that the last item will be half vis;
-            int availableLayoutSpace = layoutWidth - itemWidth / 2 - firstItemOffset;
+            // Items cannot fit in view (without scroll). Set space in a way that the last item will be half visible;
+            float lastItemVisibilityPercent = getFloatVal(R.dimen.toolbar_item_last_item_visibility_percent);
+            int availableLayoutSpace = layoutWidth - (int)(itemWidth *lastItemVisibilityPercent) - firstItemOffset;
             int numOfItemsDisplayedExcludingLast = availableLayoutSpace / (itemWidth + minSpaceBetweenItems);
             int unUsedSpace = availableLayoutSpace - numOfItemsDisplayedExcludingLast * (itemWidth + minSpaceBetweenItems);
             spaceBetweenItems += unUsedSpace / numOfItemsDisplayedExcludingLast;
         } else if (totalItemsWidth < layoutWidth) {
-            // Try to fill up screen width by adding padding between items.
+            //Items can fit in view. Try to fill up screen width by adding space between items.
             int maxSpaceBetweenItems = getContext().getResources().getDimensionPixelOffset(R.dimen.toolbar_item_max_space);
-            int maxSpace = maxSpaceBetweenItems * (toolbarItemList.size() + 1) + toolbarItemList.size() * itemWidth;
-            if (maxSpace >= layoutWidth) {
-                int unUsedSpace = layoutWidth - toolbarItemList.size() * itemWidth;
-                int padding = unUsedSpace / (toolbarItemList.size() + 1);
+            int totalItemsWidthIncludingSpace = maxSpaceBetweenItems * (toolbarItems.size() + 1) + toolbarItems.size() * itemWidth;
+            if (totalItemsWidthIncludingSpace >= layoutWidth) {
+                // Items can fit in screen without exceeding max space.
+                int unUsedSpace = layoutWidth - toolbarItems.size() * itemWidth;
+                int padding = unUsedSpace / (toolbarItems.size() + 1);
                 spaceBetweenItems = padding;
                 firstItemOffset = spaceBetweenItems;
             } else {
+                // Items can not fill screen, center the items.
                 spaceBetweenItems = maxSpaceBetweenItems;
-                int gap = (layoutWidth - maxSpace) / 2;
+                int gap = (layoutWidth - totalItemsWidthIncludingSpace) / 2;
                 firstItemOffset = spaceBetweenItems + gap;
             }
         }
     }
 
     private void setSpaceDecorator() {
-        if(toolbarRecyclerView == null){
+        if (toolbarRecyclerView == null) {
             return;
         }
         if (spaceDecorator != null) {
             toolbarRecyclerView.removeItemDecoration(spaceDecorator);
         }
-        spaceDecorator = new ToolbarSpaceDecoration(new SpaceDecoratorAdaptor());
+        spaceDecorator = new ToolbarSpaceDecorator(new SpaceDecoratorAdaptor());
         toolbarRecyclerView.addItemDecoration(spaceDecorator);
     }
 
     private void setPacksDecorator() {
-        if(toolbarRecyclerView == null){
+        if (toolbarRecyclerView == null) {
             return;
         }
         if (packDecorator != null) {
@@ -235,35 +294,36 @@ public class ToolbarView extends FrameLayout {
     }
 
 
-    private class PackDecorationAdaptor implements ToolbarPackDecoration.PackItemsDecorationAdapter {
+    private class PackDecorationAdaptor implements ToolbarPackDecorator.PackItemsDecorationAdapter {
         @Override
         public boolean isFirstItemInPack(int pos) {
-            if (toolbarItemList != null && pos < toolbarItemList.size()) {
-                return toolbarItemList.get(pos).isFirst();
+            if (toolbarItems != null && pos < toolbarItems.size()) {
+                return toolbarItems.get(pos).isFirst();
             }
             return false;
         }
 
         @Override
         public boolean isLastItemInPack(int pos) {
-            if (toolbarItemList != null && pos < toolbarItemList.size()) {
-                return toolbarItemList.get(pos).isLast();
+            if (toolbarItems != null && pos < toolbarItems.size()) {
+                return toolbarItems.get(pos).isLast();
             }
             return false;
         }
 
+        /**
+         * Return the title to be displayed for the given pack item. The title text should be defined
+         * in the object of the first item in the pack.
+         */
         @Override
         public Integer getPackTitleText(int pos) {
-            if (toolbarItemList != null && pos < toolbarItemList.size()) {
-                if (toolbarItemList.get(pos).getStyle() != ToolbarItemStyle.PACK) {
+            if (toolbarItems != null && pos < toolbarItems.size()) {
+                if (toolbarItems.get(pos).getStyle() != ToolbarItemStyle.PACK) {
                     return null;
                 }
                 for (int i = pos; i >= 0; --i) {
-                    if (i != pos && toolbarItemList.get(i).isLast()) {
-                        return null;
-                    }
-                    if (toolbarItemList.get(i).isFirst()) {
-                        return toolbarItemList.get(i).getPackTitle();
+                    if (toolbarItems.get(i).isFirst()) {
+                        return toolbarItems.get(i).getPackTitle();
                     }
                 }
             }
@@ -282,8 +342,8 @@ public class ToolbarView extends FrameLayout {
         @Nullable
         public Integer getPackBadgeIcon(int pos) {
             for (int i = pos; i >= 0; --i) {
-                if (toolbarItemList.get(i).isFirst()) {
-                    Integer badge = toolbarItemList.get(i).getBadge();
+                if (toolbarItems.get(i).isFirst()) {
+                    Integer badge = toolbarItems.get(i).getBadge();
                     return badge;
                 }
             }
@@ -291,14 +351,14 @@ public class ToolbarView extends FrameLayout {
         }
     }
 
-    private class SpaceDecoratorAdaptor implements ToolbarSpaceDecoration.SpaceDecorationAdapter {
+    private class SpaceDecoratorAdaptor implements ToolbarSpaceDecorator.SpaceDecorationAdapter {
 
         @Override
         public int getSpaceBeforeItem(int pos) {
-            if (toolbarItemList == null || pos > toolbarItemList.size()) {
+            if (toolbarItems == null || pos > toolbarItems.size()) {
                 return 0;
             }
-            return toolbarItemList.get(pos).getStyle() != ToolbarItemStyle.PACK ? getItemSpace(pos) : getPackSpace(pos);
+            return toolbarItems.get(pos).getStyle() != ToolbarItemStyle.PACK ? getItemSpace(pos) : getPackSpace(pos);
         }
 
         private int getItemSpace(int pos) {
@@ -313,7 +373,7 @@ public class ToolbarView extends FrameLayout {
             if (pos == 0) {
                 return firstPackOffset;
             } else {
-                if (toolbarItemList.get(pos).isFirst()) {
+                if (toolbarItems.get(pos).isFirst()) {
                     return spaceBetweenPacks;
                 } else {
                     return spaceBetweenPackItems;

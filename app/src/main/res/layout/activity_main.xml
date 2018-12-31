@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pnx_black"
+    android:background="@color/pnx_white"
     tools:context=".MainActivity">
 
     <com.lightricks.efraim.toolbar.toolbar.ToolbarView
         android:id="@+id/toolbar_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/pnx_gray3"
+        android:background="@color/pnx_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="135dp"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0" />
 
     <com.lightricks.efraim.toolbar.toolbar.ToolbarView
-        android:background="@color/pnx_gray3"
+        android:background="@color/pnx_black"
         android:id="@+id/toolbar_2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.915" />
+        app:layout_constraintGuide_percent="0.815" />
 
 
 

@@ -13,9 +13,9 @@
         android:id="@+id/toolbar_icon_badge"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_badge_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_icon_icon_view"
         app:layout_constraintDimensionRatio="1"
-        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintHeight_percent="@dimen/toolbar_icon_item_badge_height_and_width"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_badge_vertical" />
 
 
@@ -23,8 +23,6 @@
         android:id="@+id/toolbar_icon_icon_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/ic_duplicate"
-        android:backgroundTint="@color/pnx_gray1"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="@dimen/toolbar_icon_item_icon_height_and_width"
@@ -50,7 +48,6 @@
         android:lines="1"
         android:text="title"
         android:gravity="center"
-        android:textColor="@color/pnx_gray1"
         android:textSize="@dimen/toolbar_item_title_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
