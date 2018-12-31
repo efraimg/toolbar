@@ -2,6 +2,8 @@ package com.lightricks.efraim.toolbar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.lightricks.efraim.toolbar.toolbar.ToolbarItem;
@@ -17,6 +19,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewGroup.LayoutParams layoutParams = findViewById(R.id.toolbar_1).getLayoutParams();
+                layoutParams.height = 900;
+                findViewById(R.id.toolbar_1).setLayoutParams(layoutParams);
+            }
+        });
+
         ToolbarItem toolbarItem11 = ToolbarItem.createIconToolbarItem("id1", R.string.animate, R.drawable.ic_animate, true,null);
         ToolbarItem toolbarItem22 = ToolbarItem.createIconToolbarItem("id1", R.string.loop, R.drawable.ic_loop,false, null);
         ToolbarItem toolbarItem33 = ToolbarItem.createIconToolbarItem("id1", R.string.sky, R.drawable.ic_sky,false, null);
@@ -26,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         ToolbarItem toolbarItem4 = ToolbarItem.createNumberToolbarItem("id1", R.string.overlay, "15",true);
         ToolbarItem toolbarItem5 = ToolbarItem.createPackToolbarItem(
                 "id", R.string.app_name, R.color.pnx_gray3,
-                R.drawable.ic_duplicate, UriUtils.getResourceUri(this, R.raw.test_image),true, null, true, false, R.string.pack1);
+                R.drawable.ic_duplicate, UriUtils.getResourceUri(this, R.raw.test_image),true, R.drawable.ic_round_star_rate_18px, true, false, R.string.pack1);
         ToolbarItem toolbarItem6 = ToolbarItem.createPackToolbarItem(
                 "id", R.string.app_name, R.color.pnx_gray1,
                 null,  UriUtils.getResourceUri(this, R.raw.test_image), false,null, false, false, null);
@@ -39,11 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.ic_duplicate, UriUtils.getResourceUri(this, R.raw.test_image),true, R.drawable.ic_round_star_rate_18px, true, false, R.string.pack2);
         ToolbarItem toolbarItem9 = ToolbarItem.createPackToolbarItem(
                 "id", R.string.app_name, R.color.pnx_white,
-                null, UriUtils.getResourceUri(this, R.raw.test_image),false, null, true, true, null);
+                null, UriUtils.getResourceUri(this, R.raw.test_image),false, R.drawable.ic_round_star_rate_18px, true, true, null);
 
         ToolbarItem toolbarItem10 = ToolbarItem.createPackToolbarItem(
                 "id", R.string.app_name, R.color.pnx_white,
-                R.drawable.ic_more, UriUtils.getResourceUri(this, R.raw.test_image),true, null, true, true, R.string.pack3);
+                R.drawable.ic_more, UriUtils.getResourceUri(this, R.raw.test_image),true, R.drawable.ic_round_star_rate_18px, true, true, R.string.pack3);
 //        ToolbarItem toolbarItem11 = ToolbarItem.createPackToolbarItem(
 //                "id", R.string.app_name, R.color.pnx_white, R.color.pnx_gray3,
 //                R.drawable.ic_duplicate, R.color.main_orange, UriUtils.getResourceUri(this, R.raw.test_image), R.drawable.ic_round_star_rate_18px, true, false, R.string.app_name);

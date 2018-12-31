@@ -13,12 +13,12 @@ import android.widget.TextView;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ToolbarPackItemsDecoration extends RecyclerView.ItemDecoration {
+public class ToolbarPackDecoration extends RecyclerView.ItemDecoration {
     private final PackItemsDecorationAdapter packItemsDecorationAdapter;
     private final int packHeaderTopOffset;
     private final int packHeaderLeftAndRightPadding;
-    private final int badgeTopOffset;
     private final int badgeLeftOffset;
+    private final int badgeTopOffset;
     private final View badgeView;
 
     private final static int MAX_TITLE_ENTRIES = 10;
@@ -28,7 +28,7 @@ public class ToolbarPackItemsDecoration extends RecyclerView.ItemDecoration {
         }
     };
 
-    public ToolbarPackItemsDecoration(PackItemsDecorationAdapter packItemsDecorationAdapter, int packHeaderTopOffset, int packHeaderLeftAndRightPadding, int badgeTopOffset, int badgeLeftOffset, View badgeView) {
+    public ToolbarPackDecoration(PackItemsDecorationAdapter packItemsDecorationAdapter, int packHeaderTopOffset, int packHeaderLeftAndRightPadding, int badgeLeftOffset, int badgeTopOffset, View badgeView) {
         this.packItemsDecorationAdapter = packItemsDecorationAdapter;
         this.packHeaderTopOffset = packHeaderTopOffset;
         this.packHeaderLeftAndRightPadding = packHeaderLeftAndRightPadding;
@@ -58,7 +58,7 @@ public class ToolbarPackItemsDecoration extends RecyclerView.ItemDecoration {
                         if (badgeView.getWidth() == 0) {
                             measureView(badgeView, parent);
                         }
-                        badgeView.setBackgroundResource(badge);
+                        //badgeView.setBackgroundResource(badge);
                         drawBadge(c, firstVisibleChild, badgeView);
                     }
                 }
